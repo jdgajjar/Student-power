@@ -1,0 +1,39 @@
+'use client';
+
+import { Search } from 'lucide-react';
+import { useState } from 'react';
+
+interface SearchBarProps {
+  placeholder?: string;
+  onSearch: (query: string) => void;
+  className?: string;
+}
+
+export default function SearchBar({ 
+  placeholder = 'Search...', 
+  onSearch,
+  className = '' 
+}: SearchBarProps) {
+  const [query, setQuery] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    onSearch(value);
+  };
+
+  return (
+    <div className={`relative w-full max-w-2xl ${className}`}>
+      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <Search className="h-5 w-5 text-gray-400" />
+      </div>
+      <input
+        type="text"
+        value={query}
+        onChange={handleChange}
+        className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        placeholder={placeholder}
+      />
+    </div>
+  );
+}
